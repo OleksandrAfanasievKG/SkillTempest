@@ -2,7 +2,10 @@
 
 #include "Core/StGameMode.h"
 
+#include "Character/StCharacter.h"
+#include "Core/SkillTempest.h"
 #include "GameFramework/GameStateBase.h"
+#include "GameFramework/PlayerStart.h"
 #include "GameFramework/PlayerState.h"
 
 void AStGameMode::PostLogin(APlayerController* NewPlayer)
@@ -53,4 +56,31 @@ void AStGameMode::Logout(AController* Exiting)
 		60.0f,
 		FColor::Cyan,
 		FString::Printf(TEXT("%s has left the game!"), *PlayerState->GetPlayerName()));
+}
+
+void AStGameMode::BeginPlay()
+{
+	Super::BeginPlay();
+
+	checkUClassInBp(this, CharacterClass);
+
+	// bind some delegates here if needed
+	// that's okay if gamemode know about other classes, because it's main class in gameplay logic
+}
+
+void AStGameMode::RespawnPlayer(AController* Controller)
+{
+	const APlayerStart* PlayerStart = PlayerStarts[FMath::RandHelper(PlayerStarts.Num())];
+
+	FActorSpawnParameters SpawnParameters;
+	SpawnParameters.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButAlwaysSpawn;
+
+	AStCharacter* Character = GetWorld()->SpawnActor<AStCharacter>(
+		CharacterClass, PlayerStart->GetActorLocation(), PlayerStart->GetActorRotation(), SpawnParameters);
+
+	APawn* OldPawn = Controller->GetPawn();
+	Controller->UnPossess();
+
+	OldPawn->Destroy();
+	Controller->Possess(Character);
 }

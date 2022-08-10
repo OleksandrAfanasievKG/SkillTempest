@@ -6,26 +6,22 @@
 #include "AbilitySystemInterface.h"
 #include "GameFramework/Character.h"
 
-#include "StCharacterBase.generated.h"
+#include "StCharacter.generated.h"
 
 class UStAbilitySystemComponent;
 
 UCLASS()
-class SKILLTEMPEST_API AStCharacterBase final : public ACharacter, public IAbilitySystemInterface
+class SKILLTEMPEST_API AStCharacter final : public ACharacter, public IAbilitySystemInterface
 {
 	GENERATED_BODY()
 
 public:
-	AStCharacterBase();
+	AStCharacter();
 
 protected:
-	virtual void BeginPlay() override;
-
 	UPROPERTY()
 	TWeakObjectPtr<UStAbilitySystemComponent> AbilitySystemComponent;
 
 public:
-	virtual void Tick(float DeltaTime) override;
-	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent) override;
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 };

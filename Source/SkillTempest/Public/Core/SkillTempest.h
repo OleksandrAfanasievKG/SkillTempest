@@ -12,3 +12,20 @@
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName)               \
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName)               \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
+
+UENUM(BlueprintType)
+enum class EStAbilityInputID : uint8
+{
+	None UMETA(Hidden),
+	Confirm,
+	Cancel,
+
+	Shoot,
+	Invisibility,
+	Freeze,
+	Dash,
+
+	Aim,
+	Sprint,
+	Jump,
+};
