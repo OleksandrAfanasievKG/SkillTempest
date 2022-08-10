@@ -14,6 +14,7 @@ public class SkillTempest : ModuleRules
 				"AIModule",
 				"Core",
 				"CoreUObject",
+				"CoreOnline",
 				"Engine",
 				"GameplayAbilities",
 				"GameplayTags",
